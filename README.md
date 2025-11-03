@@ -37,7 +37,6 @@ The project is designed as a **proof-of-concept** for the Commons Initiative:
 
 4. The gateway will be available at http://localhost:9090/consent.
 
-
 5. The audit API will be accessible at http://localhost:8080/ledger.
 
 
@@ -56,10 +55,15 @@ Advanced AI Technology — Development Partner (Autonomous Systems Research)
 ---
 ### Phase 9  
 **Public release and deployment of the Commons Preemptive Ethics Framework — v1.0.0 (Live)**  
-
 The framework has been officially published under the **CERL-1.0 License**,  
 with verified containers, live documentation, and public audit endpoints.  
 For the latest updates, visit:  
 ➡️ https://mommommy1960-lang.github.io/CERL-Preemptive/
 
 ---
+
+### Phase 13  
+**Milestone v1.1.0-dev — Encrypted Consent-Token Exchange Layer (ECTEL)**  
+Secure cross-node consent exchange now active in v1.1-dev branch.  
+See detailed milestone report here:  
+➡️ https://github.com/mommommy1960-lang/CERL-Preemptive/blob/main/docs/milestone_v1.1.0.md
