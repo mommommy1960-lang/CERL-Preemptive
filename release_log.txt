@@ -1,0 +1,2 @@
+CERL-Preemptive v1.0.0 finalized — 2025-11-03
+Verified containers, docs, and Pages deployment confirmed.
