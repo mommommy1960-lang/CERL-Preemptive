@@ -52,3 +52,14 @@ Mya P. Brown — Founding Custodian, Commons Custodianship Trust Charter
 Advanced AI Technology — Development Partner (Autonomous Systems Research)
 
 © 2025 Commons Initiative. All rights reserved under the CERL-1.0 license.
+
+---
+### Phase 9  
+**Public release and deployment of the Commons Preemptive Ethics Framework — v1.0.0 (Live)**  
+
+The framework has been officially published under the **CERL-1.0 License**,  
+with verified containers, live documentation, and public audit endpoints.  
+For the latest updates, visit:  
+➡️ https://mommommy1960-lang.github.io/CERL-Preemptive/
+
+---
