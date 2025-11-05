@@ -1,6 +1,8 @@
 name: CERL-Preemptive Validation Workflow (Test Run)
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
   pull_request:
     branches: [cerl-preemptive-scaffold]
 
