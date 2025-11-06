@@ -78,7 +78,7 @@ pip install ruff flake8 bandit pip-audit
 
 # Run linting
 ruff check cerl_preemptive/
-flake8 cerl_preemptive/
+flake8 cerl_preemptive/ --max-line-length=120 --extend-ignore=E203,W503
 
 # Run security scan
 bandit -r cerl_preemptive/

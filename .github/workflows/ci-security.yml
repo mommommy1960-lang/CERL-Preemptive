@@ -87,7 +87,7 @@ jobs:
       - name: Dependency audit
         run: |
           echo "=== Running Dependency Audit ==="
-          # Create requirements.txt if it doesn't exist
+          # Install from requirements.txt if it exists
           if [ -f "requirements.txt" ]; then
             pip install -r requirements.txt || true
           fi
