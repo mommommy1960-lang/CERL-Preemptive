@@ -15,45 +15,74 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Confirm .github/workflows/validate.yml exists and is readable
-        run: |
-          if [ ! -r ".github/workflows/validate.yml" ]; then
-            echo ".github/workflows/validate.yml is missing or unreadable"
-            exit 1
-          fi
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-      - name: Enumerate directories and root markdown files
+      - name: Validate repository structure
         run: |
-          find . -type d \( -name "spec" -o -name "cli" -o -name "tests" \) > dirs.txt
-          find . -maxdepth 1 -name "*.md" > root_md.txt
-          cat dirs.txt root_md.txt > repo_enum.txt
+          echo "Validating repository structure..."
+          # Check for required Python modules
+          if [ ! -d "cerl_preemptive" ]; then
+            echo "ERROR: cerl_preemptive directory is missing"
+            exit 1
+          fi
+          
+          # Check for core Python files
+          required_files=(
+            "cerl_preemptive/consent_ledger.py"
+            "cerl_preemptive/consent_token_manager.py"
+            "cerl_preemptive/audit_trail_api.py"
+            "cerl_preemptive/heartbeat.py"
+            "README.md"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Required file $file is missing"
+              exit 1
+            fi
+            echo "✓ Found $file"
+          done
 
-      - name: Validate schema and markdown presence
+      - name: Validate Python syntax
         run: |
-          if [ ! -r "spec/consent-schema.json" ]; then
-            echo "spec/consent-schema.json is missing or unreadable"
-            exit 1
-          fi
-          if [ ! -r "AI_GUIDE.md" ]; then
-            echo "AI_GUIDE.md is missing or unreadable"
-            exit 1
-          fi
-          python3 -c "import json; json.load(open('spec/consent-schema.json'))" 2>/dev/null || exit 1
-          head -40 AI_GUIDE.md > /dev/null || exit 1
+          echo "Validating Python syntax..."
+          python3 -m py_compile cerl_preemptive/consent_ledger.py
+          python3 -m py_compile cerl_preemptive/consent_token_manager.py
+          python3 -m py_compile cerl_preemptive/audit_trail_api.py
+          python3 -m py_compile cerl_preemptive/heartbeat.py
+          echo "✓ All Python files have valid syntax"
+
+      - name: Enumerate repository structure
+        run: |
+          echo "Enumerating repository structure..."
+          find . -type f -name "*.py" > python_files.txt || true
+          find . -type f -name "*.md" > markdown_files.txt || true
+          find . -type d -maxdepth 2 > directories.txt || true
+          cat python_files.txt markdown_files.txt directories.txt > repo_enum.txt || true
 
       - name: Generate dry-run artifact
         run: |
           echo "Dry Run: CERL-Preemptive Validation Report" > cerl-validation-report-test.txt
+          echo "===========================================" >> cerl-validation-report-test.txt
           echo "Repo: $GITHUB_REPOSITORY" >> cerl-validation-report-test.txt
           echo "Branch Ref: $GITHUB_REF" >> cerl-validation-report-test.txt
-          echo "Workflow Permissions (simulated): ${{ toJson(github) }}" >> cerl-validation-report-test.txt
-          echo "\nDirectory and markdown enumeration:" >> cerl-validation-report-test.txt
-          cat repo_enum.txt >> cerl-validation-report-test.txt
-          echo "\nSchema and markdown files are present and syntactically correct." >> cerl-validation-report-test.txt
+          echo "Commit: $GITHUB_SHA" >> cerl-validation-report-test.txt
+          echo "Workflow Run: $GITHUB_RUN_ID" >> cerl-validation-report-test.txt
+          echo "" >> cerl-validation-report-test.txt
+          echo "Repository Structure:" >> cerl-validation-report-test.txt
+          echo "-------------------" >> cerl-validation-report-test.txt
+          cat repo_enum.txt >> cerl-validation-report-test.txt || echo "No enumeration data" >> cerl-validation-report-test.txt
+          echo "" >> cerl-validation-report-test.txt
+          echo "Validation Status: PASSED" >> cerl-validation-report-test.txt
+          echo "✓ All required Python modules are present" >> cerl-validation-report-test.txt
+          echo "✓ All Python files have valid syntax" >> cerl-validation-report-test.txt
+          echo "✓ README.md is present" >> cerl-validation-report-test.txt
 
       - name: Upload dry-run artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cerl-validation-report-test
           path: cerl-validation-report-test.txt
-Add CERL-Preemptive Validation Workflow (Test Run)
