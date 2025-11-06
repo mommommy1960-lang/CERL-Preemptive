@@ -49,10 +49,11 @@ jobs:
       - name: Validate Python syntax
         run: |
           echo "Validating Python syntax..."
-          python3 -m py_compile cerl_preemptive/consent_ledger.py
-          python3 -m py_compile cerl_preemptive/consent_token_manager.py
-          python3 -m py_compile cerl_preemptive/audit_trail_api.py
-          python3 -m py_compile cerl_preemptive/heartbeat.py
+          set -e
+          python3 -m py_compile cerl_preemptive/consent_ledger.py && echo "✓ consent_ledger.py syntax OK"
+          python3 -m py_compile cerl_preemptive/consent_token_manager.py && echo "✓ consent_token_manager.py syntax OK"
+          python3 -m py_compile cerl_preemptive/audit_trail_api.py && echo "✓ audit_trail_api.py syntax OK"
+          python3 -m py_compile cerl_preemptive/heartbeat.py && echo "✓ heartbeat.py syntax OK"
           echo "✓ All Python files have valid syntax"
 
       - name: Enumerate repository structure
