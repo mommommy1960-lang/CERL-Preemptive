@@ -1,3 +1,7 @@
+![CI Security](https://github.com/mommommy1960-lang/CERL-Preemptive/actions/workflows/ci-security.yml/badge.svg)
+![SHA-256 Provenance](https://img.shields.io/badge/Provenance-Chain-Active-green)
+![Sigstore (Planned)](https://img.shields.io/badge/Sigstore-Integration-In-Progress-yellow)
+
 # Commons Preemptive Ethics Framework (CERL-Preemptive)
 
 ## Overview  
@@ -14,56 +18,55 @@ The framework operates as a distributed microservice stack:
 | `audit_trail_api.py` | Provides a lightweight HTTP interface for external audit retrieval. |
 | `verify_module.py` | Scans and validates ledger integrity using hash verification. |
 | `consent_api_gateway.py` | Receives and records live consent submissions via HTTP POST. |
-| `heartbeat.py` | Emits recurring "proof-of-life" entries every 5 minutes for continuity verification. |
+| `heartbeart.py` | Emits recurring "proof-of-life" entries every 5 minutes for continuity verification. |
 
 ## Purpose  
 The project is designed as a **proof-of-concept** for the Commons Initiative:  
-– To establish open, verifiable standards for ethical AI research.  
-– To create a transparent audit trail for all consent and data-usage events.  
-– To prevent tampering, corruption, or loss of ethical accountability.
+⧫ To establish open, verifiable standards for ethical AI research.  
+⧫ To create a transparent audit trail for all consent and data-usage events.  
+⧫ To prevent tampering, corruption, or loss of ethical accountability.
 
 ## Running Locally  
 1. Clone this repository.  
 2. Open in GitHub Codespaces or any Python 3.10+ environment.  
 3. Run the modules in this order:
-   ```bash
-   python consent_ledger.py
-   python consent_token_manager.py
-   python audit_trail_api.py
-   python verify_module.py
-   python consent_api_gateway.py
-   python heartbeat.py
-   ```
-
+    ```
+    bash
+    python consent_ledger.py
+    python consent_token_manager.py
+    python audit_trail_api.py
+    python verify_module.py
+    python consent_api_gateway.py
+    python heartbeart.py
+    ```
 4. The gateway will be available at http://localhost:9090/consent.
 
 5. The audit API will be accessible at http://localhost:8080/ledger.
 
-
-License
+Licenses
 
 Licensed under CERL-1.0 (Commons Ethical Research License).
 Use and modification are permitted under Commons guidelines with attribution.
 
 Maintainers
 
-Mya P. Brown — Founding Custodian, Commons Custodianship Trust Charter
-Advanced AI Technology — Development Partner (Autonomous Systems Research)
-
-© 2025 Commons Initiative. All rights reserved under the CERL-1.0 license.
+Mya P. Brown – Founding Custodian, Commons Custodianship Trust Charter
+Advanced AI Technology ▪ Development Partner (Autonomous Systems Research)
+⚑ 2025 Commons Initiative. All rights reserved under the CERL-1.0 license.
 
 ---
+
 ### Phase 9  
-**Public release and deployment of the Commons Preemptive Ethics Framework — v1.0.0 (Live)**  
+**Public release and deployment of the Commons Preemptive Ethics Framework v1.0.0 (Live)**  
 The framework has been officially published under the **CERL-1.0 License**,  
 with verified containers, live documentation, and public audit endpoints.  
 For the latest updates, visit:  
-➡️ https://mommommy1960-lang.github.io/CERL-Preemptive/
+🌐 https://mommommy1960-lang.github.io/CERL-Preemptive/
 
 ---
 
 ### Phase 13  
-**Milestone v1.1.0-dev — Encrypted Consent-Token Exchange Layer (ECTEL)**  
+**Milestone v1.1.0-dev – Encrypted Consent-Token Exchange Layer (ECTEL)**  
 Secure cross-node consent exchange now active in v1.1-dev branch.  
 See detailed milestone report here:  
-➡️ https://github.com/mommommy1960-lang/CERL-Preemptive/blob/main/docs/milestone_v1.1.0.md
+🌐 https://github.com/mommommy1960-lang/CERL-Preemptive/blob/main/docs/milestone_v1.1.0.md
