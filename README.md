@@ -1,5 +1,7 @@
 # Commons Preemptive Ethics Framework (CERL-Preemptive)
 
+[![CI Security](https://github.com/mommommy1960-lang/CERL-Preemptive/actions/workflows/ci-security.yml/badge.svg?branch=main)](https://github.com/mommommy1960-lang/CERL-Preemptive/actions/workflows/ci-security.yml)
+
 ## Overview  
 The **Commons Preemptive Ethics Framework** is a living, open-source prototype for autonomous ethical accountability in AI and research systems.  
 It is built to self-audit, self-verify, and transparently log consent and integrity events in real time.
@@ -67,3 +69,17 @@ For the latest updates, visit:
 Secure cross-node consent exchange now active in v1.1-dev branch.  
 See detailed milestone report here:  
 ➡️ https://github.com/mommommy1960-lang/CERL-Preemptive/blob/main/docs/milestone_v1.1.0.md
+
+---
+
+### Epoch-3 Provenance Initialization  
+**Epoch-3: Identity, Attestation & Key Continuity (v0.3.0)**  
+The framework has initiated Epoch-3 provenance enhancements, establishing the foundation for:
+- Cryptographic identity enforcement
+- Sigstore key lifecycle management
+- Attestation pipeline infrastructure
+- CERL cross-compliance clause hooks (§1.3, §2.0, §4.2, §7.x future)
+
+**Status:** Initialization complete. Live signing enforcement planned for v0.4.0.  
+For detailed information, see:  
+➡️ [Epoch-3 Provenance Documentation](docs/provenance/epoch-3/README.md)
