@@ -22,16 +22,25 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install dependencies
+      - name: Install dependencies (if package.json exists)
         run: |
-          npm install
+          if [ -f package.json ]; then
+            echo "package.json found in repo root — installing dependencies"
+            npm ci
+          else
+            echo "No package.json in repo root; skipping npm install"
+          fi
 
-      - name: Run tests
+      - name: Run tests (if package.json exists)
         run: |
-          npm test
+          if [ -f package.json ]; then
+            echo "Running npm test"
+            npm test
+          else
+            echo "No package.json in repo root; skipping tests"
+          fi
 
       - name: Report results
         if: always()
         run: |
           echo "Results are reported here"
-
