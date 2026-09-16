@@ -70,7 +70,7 @@ jobs:
       - name: Ruff linting
         run: |
           echo "=== Running Ruff Linter ==="
-          ruff check cerl_preemptive/ --output-format=text
+          ruff check cerl_preemptive/ --output-format=concise
 
       - name: Flake8 linting
         run: |
