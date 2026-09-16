@@ -80,9 +80,9 @@ jobs:
       - name: Bandit security scan
         run: |
           echo "=== Running Bandit Security Scan ==="
-          bandit -r cerl_preemptive/ -f txt -o bandit-report.txt || true
+          bandit -r cerl_preemptive/ -f txt -o bandit-report.txt
           cat bandit-report.txt || echo "No security issues found"
-          echo "✓ Security scan completed"
+          echo "✓ Security scan completed with no Bandit findings"
 
       - name: Dependency audit
         run: |
@@ -91,7 +91,7 @@ jobs:
           if [ -f "requirements.txt" ]; then
             pip install -r requirements.txt || true
           fi
-          pip-audit --desc || echo "⚠ Dependency audit found issues (non-blocking)"
+          pip-audit --desc
 
       - name: YAML validation
         run: |
