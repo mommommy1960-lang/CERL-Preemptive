@@ -37,7 +37,7 @@ def append_event(actor: str, action: str, payload: dict, consent_token: Optional
     raw = json.dumps(event, sort_keys=True)
     event["hash"] = _hash(raw)
     with open(LEDGER_PATH, "a", encoding="utf-8") as f:
-        f.write(json.dumps(event) + "\\n")
+        f.write(json.dumps(event) + "\n")
     return event["hash"]
 
 def verify_chain() -> bool:
