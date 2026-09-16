@@ -70,12 +70,12 @@ jobs:
       - name: Ruff linting
         run: |
           echo "=== Running Ruff Linter ==="
-          ruff check cerl_preemptive/ --output-format=text || echo "⚠ Ruff found issues (non-blocking)"
+          ruff check cerl_preemptive/ --output-format=text
 
       - name: Flake8 linting
         run: |
           echo "=== Running Flake8 Linter ==="
-          flake8 cerl_preemptive/ --count --statistics --max-line-length=120 --extend-ignore=E203,W503 || echo "⚠ Flake8 found issues (non-blocking)"
+          flake8 cerl_preemptive/ --count --statistics --max-line-length=120 --extend-ignore=E203,W503
 
       - name: Bandit security scan
         run: |
@@ -89,7 +89,7 @@ jobs:
           echo "=== Running Dependency Audit ==="
           # Install from requirements.txt if it exists
           if [ -f "requirements.txt" ]; then
-            pip install -r requirements.txt || true
+            pip install -r requirements.txt
           fi
           pip-audit --desc
 
