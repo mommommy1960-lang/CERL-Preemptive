@@ -12,7 +12,7 @@ def issue_token(actor: str, scope: str, expiry_hours: int = 24):
     record = {"token": token_id, "actor": actor, "scope": scope, "expiry": expiry}
     with open(TOKENS, "a", encoding="utf-8") as f:
         json.dump(record, f)
-        f.write("\\n")
+        f.write("\n")
     print(f"[TOKEN] Issued token {token_id[:8]} for {actor} ({scope})")
     return token_id
 
