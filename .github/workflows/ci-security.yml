@@ -87,11 +87,14 @@ jobs:
       - name: Dependency audit
         run: |
           echo "=== Running Dependency Audit ==="
-          # Install from requirements.txt if it exists
           if [ -f "requirements.txt" ]; then
             pip install -r requirements.txt
+            pip-audit -r requirements.txt --desc
+          elif [ -f "pyproject.toml" ]; then
+            pip-audit --desc
+          else
+            echo "No declared project dependency manifest found; dependency audit not applicable."
           fi
-          pip-audit --desc
 
       - name: YAML validation
         run: |
