@@ -1,10 +1,12 @@
-import time, json, hashlib
+import hashlib
+import json
+import time
 from pathlib import Path
 
 LEDGER_PATH = Path(__file__).resolve().parents[0] / "ledger.json"
 
 def heartbeat(interval=60):
-    """Appends a cryptographic heartbeat every `interval` seconds to prove the ledger is alive."""
+    """Appends a cryptographic heartbeat every interval seconds to prove the ledger is alive."""
     while True:
         event = {
             "id": hashlib.sha256(str(time.time()).encode()).hexdigest(),
@@ -15,7 +17,7 @@ def heartbeat(interval=60):
         try:
             with open(LEDGER_PATH, "r", encoding="utf-8") as f:
                 ledger = json.load(f)
-        except:
+        except (FileNotFoundError, json.JSONDecodeError):
             ledger = []
         ledger.append(event)
         with open(LEDGER_PATH, "w", encoding="utf-8") as f:
