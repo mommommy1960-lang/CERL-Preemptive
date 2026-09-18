@@ -1,4 +1,8 @@
-import hashlib, json, os, time, uuid
+import hashlib
+import json
+import os
+import time
+import uuid
 from typing import Optional
 
 LEDGER_PATH = "ledger.jsonl"
@@ -16,7 +20,7 @@ def last_hash() -> str:
     try:
         last = json.loads(lines[-1].decode())
         return last.get("hash", "0" * 64)
-    except Exception:
+    except (UnicodeDecodeError, json.JSONDecodeError):
         return "0" * 64
 
 def append_event(actor: str, action: str, payload: dict, consent_token: Optional[str] = None):

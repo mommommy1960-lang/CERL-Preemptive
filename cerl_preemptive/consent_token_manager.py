@@ -1,4 +1,6 @@
-import uuid, time, json
+import json
+import time
+import uuid
 from pathlib import Path
 
 TOKENS = Path(__file__).resolve().parents[0] / "tokens.jsonl"
