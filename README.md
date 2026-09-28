@@ -47,6 +47,8 @@ The project is designed as a **proof-of-concept** for the Commons Initiative:
 
 ## Consent Validation
 
+The local `consent_token_manager.py` is a prototype opaque-token ledger. It now checks expiry, optional actor/scope binding, and append-only revocation events. Its tokens are **not signed or encrypted**; do not use this file-based prototype as a production authorization service or expose the token file. Independent security review, protected storage, and integration with the request validator are still required.
+
 The `consent_validator.py` module provides real-time validation of data access requests to ensure compliance with consent requirements.
 
 ### Features
