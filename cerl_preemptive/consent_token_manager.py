@@ -1,16 +1,21 @@
 import json
 import secrets
 import time
+import math
 from pathlib import Path
 
 TOKENS = Path(__file__).resolve().parents[0] / "tokens.jsonl"
 
 def issue_token(actor: str, scope: str, expiry_hours: int = 24):
     """Create an opaque local prototype token with a short lifetime."""
-    if not actor or not scope or expiry_hours <= 0:
+    if (not isinstance(actor, str) or not actor.strip() or not isinstance(scope, str) or not scope.strip()
+            or isinstance(expiry_hours, bool) or not isinstance(expiry_hours, (int, float))
+            or not math.isfinite(expiry_hours) or expiry_hours <= 0):
         raise ValueError("Actor, scope, and positive expiry are required")
     token_id = secrets.token_urlsafe(32)
     expiry = time.time() + expiry_hours * 3600
+    if not math.isfinite(expiry):
+        raise ValueError("Expiry must be finite")
     record = {"event": "issue", "token": token_id, "actor": actor, "scope": scope, "expiry": expiry}
     with open(TOKENS, "a", encoding="utf-8") as f:
         json.dump(record, f)
@@ -38,6 +43,8 @@ def validate_token(token_id: str, actor: str | None = None, scope: str | None = 
         with open(TOKENS, "r", encoding="utf-8") as f:
             for line in f:
                 rec = json.loads(line)
+                if not isinstance(rec, dict):
+                    return False
                 if rec.get("token") != token_id:
                     continue
                 if rec.get("event", "issue") == "revoke":
@@ -47,7 +54,8 @@ def validate_token(token_id: str, actor: str | None = None, scope: str | None = 
     except (FileNotFoundError, json.JSONDecodeError, OSError):
         return False
     return bool(
-        issued and not revoked and isinstance(issued.get("expiry"), (int, float))
+        issued and not revoked and not isinstance(issued.get("expiry"), bool)
+        and isinstance(issued.get("expiry"), (int, float)) and math.isfinite(issued["expiry"])
         and now < issued["expiry"]
         and (actor is None or issued.get("actor") == actor)
         and (scope is None or issued.get("scope") == scope)
