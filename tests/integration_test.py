@@ -27,7 +27,7 @@ def print_section(title):
     print('=' * 70)
 
 
-def test_problem_statement_scenario():
+def scenario_problem_statement_scenario():
     """Test the exact scenario from the problem statement"""
     print_section("Problem Statement Scenario Test")
 
@@ -60,7 +60,7 @@ def test_problem_statement_scenario():
         return True
 
 
-def test_valid_consent_scenario():
+def scenario_valid_consent_scenario():
     """Test a scenario with valid consent"""
     print_section("Valid Consent Scenario Test")
 
@@ -91,7 +91,7 @@ def test_valid_consent_scenario():
         return False
 
 
-def test_ledger_integrity():
+def scenario_ledger_integrity():
     """Verify ledger integrity after validations"""
     print_section("Ledger Integrity Test")
 
@@ -136,7 +136,7 @@ def test_ledger_integrity():
         return False
 
 
-def test_public_data_access():
+def scenario_public_data_access():
     """Test that public data can be accessed without consent"""
     print_section("Public Data Access Test")
 
@@ -166,22 +166,18 @@ def main():
     print("\nThis test suite validates the consent validation implementation")
     print("against the problem statement requirements.")
 
-    # Setup: Use a temporary ledger for testing
-    temp_dir = tempfile.mkdtemp()
     original_ledger = consent_ledger.LEDGER_PATH
-    consent_ledger.LEDGER_PATH = os.path.join(temp_dir, "integration_test_ledger.jsonl")
-
-    print(f"\nUsing temporary ledger: {consent_ledger.LEDGER_PATH}")
-
-    # Run tests
-    results = []
-    results.append(("Problem Statement Scenario", test_problem_statement_scenario()))
-    results.append(("Valid Consent Scenario", test_valid_consent_scenario()))
-    results.append(("Public Data Access", test_public_data_access()))
-    results.append(("Ledger Integrity", test_ledger_integrity()))
-
-    # Restore original ledger path
-    consent_ledger.LEDGER_PATH = original_ledger
+    with tempfile.TemporaryDirectory() as temp_dir:
+        consent_ledger.LEDGER_PATH = os.path.join(temp_dir, "integration_test_ledger.jsonl")
+        try:
+            results = [
+                ("Problem Statement Scenario", scenario_problem_statement_scenario()),
+                ("Valid Consent Scenario", scenario_valid_consent_scenario()),
+                ("Public Data Access", scenario_public_data_access()),
+                ("Ledger Integrity", scenario_ledger_integrity()),
+            ]
+        finally:
+            consent_ledger.LEDGER_PATH = original_ledger
 
     # Summary
     print_section("Test Summary")
@@ -206,10 +202,9 @@ def main():
         print(f"\n❌ {total - passed} test(s) failed")
         return 1
 
-    # Cleanup
-    import shutil
-    if os.path.exists(temp_dir):
-        shutil.rmtree(temp_dir)
+
+def test_complete_integration_workflow():
+    assert main() == 0
 
 
 if __name__ == "__main__":

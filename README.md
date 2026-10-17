@@ -4,6 +4,19 @@
 
 # Commons Preemptive Ethics Framework (CERL-Preemptive)
 
+## Stored-token request path — October 17, 2026
+
+`ConsentValidator.validate_token_request` checks a stored opaque token against
+actor, action, target and purpose, including expiry and revocation. Issue its scope
+using `ConsentValidator.token_scope(action, target, purpose)`; do not treat a
+caller-supplied `consent_status="granted"` as evidence of permission. Raw tokens
+are not written to the audit payload by this path.
+
+The earlier `validate_request` API remains a legacy instructional demonstrator
+based on caller assertions and target-name matching; it is not a production
+authorization boundary. File storage and trusted-controller access still require
+protection and independent review. These opaque tokens are not signed credentials.
+
 ## Overview  
 The **Commons Preemptive Ethics Framework** is a living, open-source prototype for autonomous ethical accountability in AI and research systems.  
 It is built to self-audit, self-verify, and transparently log consent and integrity events in real time.

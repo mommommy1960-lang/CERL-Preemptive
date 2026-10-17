@@ -4,6 +4,7 @@ Validates data access requests against consent requirements.
 """
 
 import time
+import json
 from typing import Dict, Any
 
 # Handle both relative and absolute imports
@@ -118,6 +119,29 @@ class ConsentValidator:
             True if consent is granted, False otherwise
         """
         return consent_status == "granted"
+
+    @staticmethod
+    def token_scope(action: str, target: str, purpose: str) -> str:
+        """Bind all three values without delimiter collisions."""
+        if any(not isinstance(v, str) or not v.strip() for v in (action, target, purpose)):
+            raise ValueError("Action, target, and purpose are required")
+        return json.dumps([action, target, purpose], separators=(",", ":"), ensure_ascii=True)
+
+    def validate_token_request(self, *, action, target, purpose, actor, token_id):
+        """Check stored current permission; caller assertions are not consent.
+
+        Local prototype only. Token storage and the caller/controller boundary
+        must be protected separately. The opaque token is never audit-logged.
+        """
+        from .consent_token_manager import validate_token
+        scope = self.token_scope(action, target, purpose)
+        if not isinstance(actor, str) or not actor.strip() or not validate_token(token_id, actor=actor, scope=scope):
+            self.violation_count += 1
+            append_event(actor=actor if isinstance(actor, str) else "invalid", action="consent_violation_detected",
+                         payload={"blocked": True, "reason": "token_invalid_expired_or_revoked", "target": target})
+            raise ConsentViolationError("Current actor-, target-, purpose- and action-bound permission required")
+        return self.validate_request({"action": action, "target": target, "purpose": purpose,
+                                      "actor": actor, "consent_status": "granted"})
 
     def get_violation_count(self) -> int:
         """Get the total number of consent violations detected."""
