@@ -130,3 +130,8 @@ For the latest updates, visit:
 Secure cross-node consent exchange now active in v1.1-dev branch.  
 See detailed milestone report here:  
 🌐 https://github.com/mommommy1960-lang/CERL-Preemptive/blob/main/docs/milestone_v1.1.0.md
+
+
+## Mutual collaboration boundaries
+
+Before protected exchange or shared work, read our [collaboration boundaries](https://github.com/mommommy1960-lang/commons-sentience-sandbox/blob/main/docs/continuity/PUBLIC_COLLABORATION_BOUNDARIES.md). Both parties retain their existing rights; scope, confidentiality, contributions, access and exit must be agreed for the actual engagement. Existing licenses and lawful reporting rights remain unaffected. This operating notice is not an executed contract.
